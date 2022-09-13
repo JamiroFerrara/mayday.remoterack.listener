@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 system_shutdown = "3.0.0"
 tokio = { version = "1.21.0", features = ["full"] }
+self_update = { version = "0.31.0", features = ["archive-tar", "archive-zip"] }
 
 [profile.dev]
 opt-level = 0

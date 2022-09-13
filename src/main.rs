@@ -2,14 +2,20 @@
 
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt};
 use tokio::net::TcpStream;
+use listener::updater::*;
+
+pub fn main() -> Result<(), std::io::Error> {
+    update();
+    tokio_main()?;
+    Ok(())
+}
 
 #[tokio::main]
-pub async fn main() -> Result<(), std::io::Error> {
+pub async fn tokio_main() -> Result<(), std::io::Error> {
     loop {
         connect().await;
         println!("Reconnecting..")
     }
-    // Ok(())
 }
 
 pub async fn connect() {
