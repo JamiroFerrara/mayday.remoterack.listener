@@ -1,8 +1,8 @@
-#![windows_subsystem = "windows"]
+// #![windows_subsystem = "windows"]
 
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt};
 use tokio::net::TcpStream;
-use listener::updater::*;
+use listener::{updater::*, Ks0212};
 
 pub fn main() -> Result<(), std::io::Error> {
     update();
@@ -29,6 +29,7 @@ pub async fn connect() {
             }
 
             let mut reader = BufReader::new(stream);
+            let mut ks0212 = Ks0212::new();
 
             loop {
                 let mut line = String::new();
@@ -45,6 +46,22 @@ pub async fn connect() {
                             shutdown();
                         } else if line == "reboot\n" {
                             reboot();
+                        } else if line == "00\n" {
+                            ks0212.set_relay_value(0, false);
+                        } else if line == "10\n" {
+                            ks0212.set_relay_value(1, false);
+                        } else if line == "20\n" {
+                            ks0212.set_relay_value(2, false);
+                        } else if line == "30\n" {
+                            ks0212.set_relay_value(3, false);
+                        } else if line == "01\n" {
+                            ks0212.set_relay_value(0, true);
+                        } else if line == "11\n" {
+                            ks0212.set_relay_value(1, true);
+                        } else if line == "21\n" {
+                            ks0212.set_relay_value(2, true);
+                        } else if line == "31\n" {
+                            ks0212.set_relay_value(3, true);
                         }
                     }
                     Err(e) => {
