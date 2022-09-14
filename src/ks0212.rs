@@ -6,7 +6,7 @@ pub struct Ks0212 {
 
 impl Ks0212 {
     pub fn new() -> Self {
-        let outpins = vec![7,3,22,25];
+        let outpins = vec![7,22,6,26];
         Ks0212 { outpins }
     }
 
